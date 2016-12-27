@@ -15,14 +15,39 @@
   padding: 10px;
 }
 #gameWrap div{
-  width: 98px;
-  height: 98px;
+  width: 97px;
+  height: 97px;
   border: 1px solid black;
   border-radius: 3px;
 }
-.foo {
-  background-color: red;
+.left-down {
+  background-image: url('public/images/down-left.svg');
 }
-.bar {
-  background-color: blue;
+.right-down {
+  background-image: url('public/images/right-down.svg');
+}
+.up-down {
+  background-image: url('public/images/up-down.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.right-left{
+  background-image: url('public/images/right-left.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.left-up {
+  background-image: url('public/images/up-left.svg');
+}
+.right-up {
+  background-image: url('public/images/up-right.svg');
+}
+.up-right-down-left {
+  background-image: url('public/images/up-right-down-left.svg');
+}
+.inlet {
+
+}
+.outlet {
+
 }
