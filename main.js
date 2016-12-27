@@ -13,14 +13,16 @@ function swapFunc(id1,class1){
   }
 }
 
-// function applyListeners
-document.getElementById('1-1').addEventListener('click', function(){
-  swapNext = swapFunc(document.getElementById('1-1').id, document.getElementById('1-1').classList[0]);
-  divChilds.map(function(value,index){
-    if (index!==0){
-      value.addEventListener('click', function(){
-        swapNext(value.id, value.classList[0]);
-      })
+var swapNext;
+divChilds.map(function(value,index){
+  value.addEventListener('click',function(){
+    if (swapNext){
+      swapNext(value.id,value.classList[0]);
+      console.log('hello');
+      swapNext = 0;
+    } else {
+      swapNext = swapFunc(value.id, value.classList[0]);
+      console.log('nice');
     }
   })
 })
