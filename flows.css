@@ -1,0 +1,65 @@
+/*@left: 0%;
+@right: 100%;
+@up: 0%;
+@down: 100%;*/
+
+/*uses right-down.svg & right-down-fill.svg*/
+@keyframes flowUpToRight {
+  from { clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%); }
+  to { clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%); }
+}
+@keyframes flowLeftToDown {
+  from { clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%); }
+  to { clip-path: polygon(100% 0%, 0% 100%, 100% 100%, 100% 100%); }
+}
+
+/*uses up-left.svg & up-left-fill.svg*/
+@keyframes flowDownToLeft {
+  from { clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%); }
+  to { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+}
+@keyframes flowLeftToUp {
+  from { clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%); }
+  to { clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%); }
+}
+
+
+/*uses down-left.svg & down-left-fill.svg*/
+@keyframes flowRightToDown {
+  from { clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%); }
+  to { clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%); }
+}
+@keyframes flowUpToLeft {
+  from { clip-path: polygon(100% 100%, 100% 100%, 0% 100%, 0% 100%); }
+  to { clip-path: polygon(100% 100%, 0% 0%, 0% 100%, 0% 100%); }
+}
+
+/*uses up-right.svg & up-right-fill.svg*/
+@keyframes flowDownToRight {
+  from { clip-path: polygon(0% 0%, 0% 0%, 100% 0%, 100% 0%); }
+  to { clip-path: polygon(0% 0%, 100% 100%, 100% 0%, 100% 0%); }
+}
+@keyframes flowRightToUp {
+  from { clip-path: polygon(100% 100%, 100% 100%, 100% 0%, 100% 0%); }
+  to { clip-path: polygon(100% 100%, 0% 0%, 100% 0%, 100% 0%); }
+}
+
+/*uses up-down.svg & up-down-fill.svg*/
+@keyframes flowUpToDown {
+    from { clip-path: inset(0% 0% 100% 0%); }
+    to { clip-path: inset(0% 0% 0% 0%); }
+}
+@keyframes flowDownToUp {
+    from { clip-path: inset(100% 0% 0% 0%); }
+    to { clip-path: inset(0% 0% 0% 0%); }
+}
+
+/*uses right-left.svg & right-left-fill.svg*/
+@keyframes flowLeftToRight {
+    from { clip-path: inset(0% 100% 0% 0%); }
+    to { clip-path: inset(0% 0% 0% 0%); }
+}
+@keyframes flowRightToLeft {
+    from { clip-path: inset(0% 0% 0% 100%); }
+    to { clip-path: inset(0% 0% 0% 0%); }
+}

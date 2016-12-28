@@ -20,6 +20,14 @@
   border: 1px solid black;
   border-radius: 3px;
 }
+#gameWrap div div {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
+  border : none;
+}
 .left-down {
   background-image: url('public/images/down-left.svg');
 }
@@ -45,9 +53,16 @@
 .up-right-down-left {
   background-image: url('public/images/up-right-down-left.svg');
 }
-.inlet {
 
+#rand {
+  background-image: url('public/images/up-right.svg');
+  width: 100px;
+  height: 100px;
 }
-.outlet {
+#rand div {
+  background-image: url('public/images/up-right-fill.svg');
+  z-index: 1;
+  width : 100%;
+  height : 100%;
 
 }
