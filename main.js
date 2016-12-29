@@ -183,51 +183,91 @@ console.log(`outlet starts flowing out from ${initOutFlow} direction`);
 //plus checking method for game over or whether pipe should flow
 //....
 
+var speed = 6;
+//straight flows...
+function flowDownFunc(id){
+  var div = document.getElementById(id);
+  div.firstElementChild.style.backgroundImage = `url('public/images/up-down-fill.svg')`;
+  div.firstElementChild.style.animation = `flowUpToDown linear ${speed}s`;
+  div.addEventListener('animationstart', function(){console.log('animation started...');});
+  div.addEventListener('animationend', function(){console.log('animation end..');})
+}
+function flowUpFunc(id){
+  var div = document.getElementById(id);
+  div.firstElementChild.style.backgroundImage = `url('public/images/up-down-fill.svg')`;
+  div.firstElementChild.style.animation = `flowDownToUp linear ${speed}s`;
+  div.addEventListener('animationstart', function(){console.log('animation started...');});
+  div.addEventListener('animationend', function(){console.log('animation end..');})
+}
+function flowRightFunc(id){
+  var div = document.getElementById(id);
+  div.firstElementChild.style.backgroundImage = `url('public/images/right-left-fill.svg')`;
+  div.firstElementChild.style.animation = `flowLeftToRight linear ${speed}s`;
+  div.addEventListener('animationstart', function(){console.log('animation started...');});
+  div.addEventListener('animationend', function(){console.log('animation end..');})
+}
+function flowLeftFunc(id){
+  var div = document.getElementById(id);
+  div.firstElementChild.style.backgroundImage = `url('public/images/right-left-fill.svg')`;
+  div.firstElementChild.style.animation = `flowRightToLeft linear ${speed}s`;
+  div.addEventListener('animationstart', function(){console.log('animation started...');});
+  div.addEventListener('animationend', function(){console.log('animation end..');})
+}
+
+//curved flows...
 function flowUpRightFunc(id){
   var div = document.getElementById(id);
-  div.firstElementChild.style.animation = 'flowUpToRight linear 6s';
+  div.firstElementChild.style.backgroundImage = `url('public/images/right-down-fill.svg')`;
+  div.firstElementChild.style.animation = `flowUpToRight linear ${speed}s`;
   div.addEventListener('animationstart', function(){console.log('animation started...');});
   div.addEventListener('animationend', function(){console.log('animation end..');})
 }
 function flowLeftDownFunc(id){
   var div = document.getElementById(id);
-  div.firstElementChild.style.animation = 'flowLeftToDown linear 6s';
+  div.firstElementChild.style.backgroundImage = `url('public/images/right-down-fill.svg')`;
+  div.firstElementChild.style.animation = `flowLeftToDown linear ${speed}s`;
   div.addEventListener('animationstart', function(){console.log('animation started...');});
   div.addEventListener('animationend', function(){console.log('animation end..');})
 }
 function flowDownLeftFunc(id){
   var div = document.getElementById(id);
-  div.firstElementChild.style.animation = 'flowDownToLeft linear 6s';
-  div.addEventListener('animationstart', function(){console.log('animation started...');});
-  div.addEventListener('animationend', function(){console.log('animation end..');})
-}
-function flowLeftUpFunc(id){
-  var div = document.getElementById(id);
-  div.firstElementChild.style.animation = 'flowLeftToUp linear 6s';
-  div.addEventListener('animationstart', function(){console.log('animation started...');});
-  div.addEventListener('animationend', function(){console.log('animation end..');})
-}
-function flowRightDownFunc(id){
-  var div = document.getElementById(id);
-  div.firstElementChild.style.animation = 'flowRightToDown linear 6s';
-  div.addEventListener('animationstart', function(){console.log('animation started...');});
-  div.addEventListener('animationend', function(){console.log('animation end..');})
-}
-function flowUpLeftFunc(id){
-  var div = document.getElementById(id);
-  div.firstElementChild.style.animation = 'flowUpToLeft linear 6s';
-  div.addEventListener('animationstart', function(){console.log('animation started...');});
-  div.addEventListener('animationend', function(){console.log('animation end..');})
-}
-function flowDownRightFunc(id){
-  var div = document.getElementById(id);
-  div.firstElementChild.style.animation = 'flowDownToRight linear 6s';
+  div.firstElementChild.style.backgroundImage = `url('public/images/up-left-fill.svg')`;
+  div.firstElementChild.style.animation = `flowDownToLeft linear ${speed}s`;
   div.addEventListener('animationstart', function(){console.log('animation started...');});
   div.addEventListener('animationend', function(){console.log('animation end..');})
 }
 function flowRightUpFunc(id){
   var div = document.getElementById(id);
-  div.firstElementChild.style.animation = 'flowRightToUp linear 6s';
+  div.firstElementChild.style.backgroundImage = `url('public/images/up-left-fill.svg')`;
+  div.firstElementChild.style.animation = `flowLeftToUp linear ${speed}s`;
+  div.addEventListener('animationstart', function(){console.log('animation started...');});
+  div.addEventListener('animationend', function(){console.log('animation end..');})
+}
+function flowRightDownFunc(id){
+  var div = document.getElementById(id);
+  div.firstElementChild.style.backgroundImage = `url('public/images/down-left-fill.svg')`;
+  div.firstElementChild.style.animation = `flowRightToDown linear ${speed}s`;
+  div.addEventListener('animationstart', function(){console.log('animation started...');});
+  div.addEventListener('animationend', function(){console.log('animation end..');})
+}
+function flowUpLeftFunc(id){
+  var div = document.getElementById(id);
+  div.firstElementChild.style.backgroundImage = `url('public/images/down-left-fill.svg')`;
+  div.firstElementChild.style.animation = `flowUpToLeft linear ${speed}s`;
+  div.addEventListener('animationstart', function(){console.log('animation started...');});
+  div.addEventListener('animationend', function(){console.log('animation end..');})
+}
+function flowDownRightFunc(id){
+  var div = document.getElementById(id);
+  div.firstElementChild.style.backgroundImage = `url('public/images/up-right-fill.svg')`;
+  div.firstElementChild.style.animation = `flowDownToRight linear ${speed}s`;
+  div.addEventListener('animationstart', function(){console.log('animation started...');});
+  div.addEventListener('animationend', function(){console.log('animation end..');})
+}
+function flowLeftUpFunc(id){
+  var div = document.getElementById(id);
+  div.firstElementChild.style.backgroundImage = `url('public/images/up-right-fill.svg')`;
+  div.firstElementChild.style.animation = `flowRightToUp linear ${speed}s`;
   div.addEventListener('animationstart', function(){console.log('animation started...');});
   div.addEventListener('animationend', function(){console.log('animation end..');})
 }
@@ -236,67 +276,117 @@ function flowRightUpFunc(id){
 // flowUpRightFunc('rand');
 // flowLeftDownFunc('rand');
 // flowDownLeftFunc('rand');
-// flowLeftUpFunc('rand');
+// flowRightUpFunc('rand');
 // flowRightDownFunc('rand');
 // flowUpLeftFunc('rand');
 // flowDownRightFunc('rand');
-// flowRightUpFunc('rand');
+// flowLeftUpFunc('rand');
+// flowDownFunc('rand');
+// flowUpFunc('rand');
+// flowRightFunc('rand');
+// flowLeftFunc('rand');
+
+document.getElementById('speed').innerText = speed;
 
 setTimeout(function(){
   console.log('game started!');
+  var prevDivId = inlet.id;
   switch(true){
     case (initInFlow === 'top'):
       //if div has class up-down, trigger flow down function;
       //else if div has class right-up, trigger flow down-right function;
       //else if div has class left-up, trigger flow down-left function;
       //else trigger game over!;
+      if (inlet.classList.contains('up-down')){
+        flowDownFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
+      } else if (inlet.classList.contains('right-up')){
+        flowDownRightFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
+      } else if (inlet.classList.contains('left-up')){
+        flowDownLeftFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
+      } else {
+        console.log(`game over!`);
+      }
       break;
     case (initInFlow === 'bottom'):
       //if div has class up-down, trigger flow up function;
       //else if div has class right-down, trigger flow up-right function;
       //else if div has class left-down, trigger flow up-left function;
       //else trigger game over!;
+      if (inlet.classList.contains('up-down')){
+        flowUpFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
+      } else if (inlet.classList.contains('right-down')){
+        flowUpRightFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
+      } else if (inlet.classList.contains('left-down')){
+        flowUpLeftFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
+      } else {
+        console.log(`game over!`);
+      }
       break;
     case (initInFlow === 'left'):
       //if div has class right-left, trigger flow right function;
-      //else if div has class left-down, trigger flow left-down function;
-      //else if div has class left-up, trigger flow left-up function;
+      //else if div has class left-down, trigger flow right-down function;
+      //else if div has class left-up, trigger flow right-up function;
       //else trigger game over!;
+      if (inlet.classList.contains('right-left')){
+        flowRightFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
+      } else if (inlet.classList.contains('left-down')){
+        flowRightDownFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
+      } else if (inlet.classList.contains('left-up')){
+        flowRightUpFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
+      } else {
+        console.log(`game over!`);
+      }
       break;
     case (initInFlow === 'right'):
       //if div has class right-left, trigger flow left function;
-      //else if div has class right-down, trigger flow right-down function;
-      //else if div has class right-up, trigger flow right-up function;
+      //else if div has class right-down, trigger flow left-down function;
+      //else if div has class right-up, trigger flow left-up function;
       //else trigger game over!;
+      if (inlet.classList.contains('right-left')){
+        flowLeftFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
+      } else if (inlet.classList.contains('right-down')){
+        flowLeftDownFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
+      } else if (inlet.classList.contains('right-up')){
+        flowLeftUpFunc(inlet.id);
+        console.log(inlet.id);
+        var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
+      } else {
+        console.log(`game over!`);
+      }
       break;
   }
+  divChecker(nextDivId, prevDivId);
 } , 5000);
 
-// function divChecker(div){
-//   switch(true){
-//     case (initInFlow === 'top'):
-//       //if div has class up-down, trigger flow down function;
-//       //else if div has class right-up, trigger flow down-right function;
-//       //else if div has class left-up, trigger flow down-left function;
-//       //else trigger game over!;
-//       break;
-//     case (initInFlow === 'bottom'):
-//       //if div has class up-down, trigger flow up function;
-//       //else if div has class right-down, trigger flow up-right function;
-//       //else if div has class left-down, trigger flow up-left function;
-//       //else trigger game over!;
-//       break;
-//     case (initInFlow === 'left'):
-//       //if div has class right-left, trigger flow right function;
-//       //else if div has class left-down, trigger flow left-down function;
-//       //else if div has class left-up, trigger flow left-up function;
-//       //else trigger game over!;
-//       break;
-//     case (initInFlow === 'right'):
-//       //if div has class right-left, trigger flow left function;
-//       //else if div has class right-down, trigger flow right-down function;
-//       //else if div has class right-up, trigger flow right-up function;
-//       //else trigger game over!;
-//       break;
-//   }
-// }
+function divChecker(id,prevId){
+  if (document.getElementById(id) === null){
+    document.getElementById(prevId).addEventListener('animationend', function(){
+      console.log('gameover within divchecker!');
+    })
+  } else {
+    
+  }
+
+}

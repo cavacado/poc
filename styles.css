@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   width: 100%;
   height: 95vh;
 }
@@ -55,12 +56,11 @@
 }
 
 #rand {
-  background-image: url('public/images/up-right.svg');
+  background-image: url('public/images/right-left.svg');
   width: 100px;
   height: 100px;
 }
 #rand div {
-  background-image: url('public/images/up-right-fill.svg');
   z-index: 1;
   width : 100%;
   height : 100%;
