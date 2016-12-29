@@ -34,64 +34,66 @@ function swapFunc(id1,class1){
 }
 
 var swapNext;
+var handler = function(){
+  if (swapNext){
+    switch(true){
+      case this.classList.contains('left-down') :
+        swapNext(this.id,'left-down');
+        break;
+      case this.classList.contains('right-down') :
+        swapNext(this.id,'right-down');
+        break;
+      case this.classList.contains('up-down') :
+        swapNext(this.id,'up-down');
+        break;
+      case this.classList.contains('right-left') :
+        swapNext(this.id,'right-left');
+        break;
+      case this.classList.contains('left-up') :
+        swapNext(this.id,'left-up');
+        break;
+      case this.classList.contains('right-up') :
+        swapNext(this.id,'right-up');
+        break;
+      case this.classList.contains('up-right-down-left') :
+        swapNext(this.id,'up-right-down-left');
+        break;
+    }
+    // swapNext(this.id,this.classList[0]);
+    console.log('swapNext fired');
+    swapNext = 0;
+  } else {
+    switch(true){
+      case this.classList.contains('left-down') :
+        swapNext = swapFunc(this.id,'left-down');
+        break;
+      case this.classList.contains('right-down') :
+        swapNext = swapFunc(this.id,'right-down');
+        break;
+      case this.classList.contains('up-down') :
+        swapNext = swapFunc(this.id,'up-down');
+        break;
+      case this.classList.contains('right-left') :
+        swapNext = swapFunc(this.id,'right-left');
+        break;
+      case this.classList.contains('left-up') :
+        swapNext = swapFunc(this.id,'left-up');
+        break;
+      case this.classList.contains('right-up') :
+        swapNext = swapFunc(this.id,'right-up');
+        break;
+      case this.classList.contains('up-right-down-left') :
+        swapNext = swapFunc(this.id,'up-right-down-left');
+        break;
+    }
+    // swapNext = swapFunc(value.id, value.classList[0]);
+    console.log('clicked on a div; waiting on another click....');
+  }
+}
+
 //probably have to rewrite this code to be more dynamic; ie not to hardocode the zeroth element
 divChilds.map(function(value,index){
-  value.addEventListener('click',function(){
-    if (swapNext){
-      switch(true){
-        case value.classList.contains('left-down') :
-          swapNext(value.id,'left-down');
-          break;
-        case value.classList.contains('right-down') :
-          swapNext(value.id,'right-down');
-          break;
-        case value.classList.contains('up-down') :
-          swapNext(value.id,'up-down');
-          break;
-        case value.classList.contains('right-left') :
-          swapNext(value.id,'right-left');
-          break;
-        case value.classList.contains('left-up') :
-          swapNext(value.id,'left-up');
-          break;
-        case value.classList.contains('right-up') :
-          swapNext(value.id,'right-up');
-          break;
-        case value.classList.contains('up-right-down-left') :
-          swapNext(value.id,'up-right-down-left');
-          break;
-      }
-      // swapNext(value.id,value.classList[0]);
-      console.log('swapNext fired');
-      swapNext = 0;
-    } else {
-      switch(true){
-        case value.classList.contains('left-down') :
-          swapNext = swapFunc(value.id,'left-down');
-          break;
-        case value.classList.contains('right-down') :
-          swapNext = swapFunc(value.id,'right-down');
-          break;
-        case value.classList.contains('up-down') :
-          swapNext = swapFunc(value.id,'up-down');
-          break;
-        case value.classList.contains('right-left') :
-          swapNext = swapFunc(value.id,'right-left');
-          break;
-        case value.classList.contains('left-up') :
-          swapNext = swapFunc(value.id,'left-up');
-          break;
-        case value.classList.contains('right-up') :
-          swapNext = swapFunc(value.id,'right-up');
-          break;
-        case value.classList.contains('up-right-down-left') :
-          swapNext = swapFunc(value.id,'up-right-down-left');
-          break;
-      }
-      // swapNext = swapFunc(value.id, value.classList[0]);
-      console.log('clicked on a div; waiting on another click....');
-    }
-  })
+  value.addEventListener('click',handler)
 })
 
 //might not need to put an attribute; can use class instead
@@ -184,7 +186,7 @@ console.log(`outlet starts flowing out from ${initOutFlow} direction`);
 //....
 
 var speed = 6;
-//straight flows...
+// 4 straight flows...
 function flowDownFunc(id){
   var div = document.getElementById(id);
   div.firstElementChild.style.backgroundImage = `url('public/images/up-down-fill.svg')`;
@@ -214,7 +216,7 @@ function flowLeftFunc(id){
   div.addEventListener('animationend', function(){console.log('animation end..');})
 }
 
-//curved flows...
+// 8 curved flows...
 function flowUpRightFunc(id){
   var div = document.getElementById(id);
   div.firstElementChild.style.backgroundImage = `url('public/images/right-down-fill.svg')`;
@@ -347,6 +349,7 @@ setTimeout(function(){
         flowRightDownFunc(inlet.id);
         console.log(inlet.id);
         var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
+        console.log(nextDivId);
       } else if (inlet.classList.contains('left-up')){
         flowRightUpFunc(inlet.id);
         console.log(inlet.id);
@@ -377,16 +380,124 @@ setTimeout(function(){
       }
       break;
   }
+  inlet.removeEventListener('click', handler);
   divChecker(nextDivId, prevDivId);
 } , 5000);
 
-function divChecker(id,prevId){
-  if (document.getElementById(id) === null){
-    document.getElementById(prevId).addEventListener('animationend', function(){
-      console.log('gameover within divchecker!');
-    })
+function checkValidMove(prevDiv,curDiv){
+  if (prevDiv.classList.contains('up-down') && !curDiv.classList.contains('right-left')) {
+    return true;
+  } else if (prevDiv.classList.contains('right-left') && !curDiv.classList.contains('up-down')) {
+    return true;
   } else {
-    
+    return true;
   }
-
 }
+
+function divChecker(id,prevId){
+  var prevDiv = document.getElementById(prevId);
+  prevDiv.addEventListener('animationend', function(){
+    var curDiv = document.getElementById(id);
+    if (checkValidMove(prevDiv,curDiv)){
+      if (curDiv === null){
+        console.log('gameover within divchecker!');
+      } else {
+        switch(true){
+          case (curDiv.classList.contains('up-down')) :
+            console.log(id);
+            if (prevId[0] > id[0]) {
+              flowUpFunc(id);
+              var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
+              break;
+            };
+            if (prevId[0] < id[0]) {
+              flowDownFunc(id);
+              var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
+              break;
+            };
+            console.log(`gameover due to unmatched tiles`);
+            break;
+          case (curDiv.classList.contains('right-left')) :
+            console.log(id);
+            if (prevId[2] > id[2]) {
+              flowLeftFunc(id);
+              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
+              break;
+            };
+            if (prevId[2] < id[2]) {
+              flowRightFunc(id);
+              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
+              break;
+            };
+            console.log(`gameover due to unmatched tiles`);
+            break;
+          case (curDiv.classList.contains('left-down')) :
+            console.log(id);
+            if (prevId[0] === id[0] && prevId[2] < id[2]) {
+              flowRightDownFunc(id);
+              var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
+              break;
+            };
+            if (prevId[0] > id[0]) {
+              flowUpLeftFunc(id);
+              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
+              break;
+            };
+            console.log(`gameover due to unmatched tiles`);
+            break;
+          case (curDiv.classList.contains('left-up')) :
+            console.log(id);
+            if (prevId[0] === id[0] && prevId[2] < id[2]) {
+              flowRightUpFunc(id);
+              var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
+              break;
+            };
+            if (prevId[0] < id[0]) {
+              flowDownLeftFunc(id);
+              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
+              break;
+            };
+            console.log(`gameover due to unmatched tiles`);
+            break;
+          case (curDiv.classList.contains('right-down')) :
+            console.log(id);
+            if (prevId[0] === id[0] && prevId[2] > id[2]) {
+              flowLeftDownFunc(id);
+              var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
+              break;
+            };
+            if (prevId[0] > id[0]) {
+              flowUpRightFunc(id);
+              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
+              break;
+            };
+            console.log(`gameover due to unmatched tiles`);
+            break;
+          case (curDiv.classList.contains('right-up')) :
+            console.log(id);
+            if (prevId[0] === id[0] && prevId[2] > id[2]) {
+              flowLeftUpFunc(id);
+              var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
+              break;
+            };
+            if (prevId[0] < id[0]) {
+              flowDownRightFunc(id);
+              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
+              break;
+            };
+            console.log(`gameover due to unmatched tiles`);
+            break;
+        }
+        curDiv.removeEventListener('click',handler);
+        divChecker(nextDivId,id);
+      }
+    }
+  })
+}
+
+
+//implement recursive stuff...
+//implement outlet condition...
+//implement game over function...
+//implement speed trigger
+//implement a finish flow immmediately listener
