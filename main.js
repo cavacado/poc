@@ -5,6 +5,10 @@ var divChilds = Array.prototype.slice.call(document.getElementById('gameWrap').c
 //added complexity
 // var classArrWO4 = ['left-down', 'right-down', 'up-down', 'right-left', 'left-up', 'right-up', 'up-right-down-left'];
 var classArr = ['left-down', 'right-down', 'up-down', 'right-left', 'left-up', 'right-up'];
+var playerScore;
+playerScore = Number(localStorage.playerScore) || 0;
+console.log(playerScore);
+document.getElementById('score').innerText = playerScore;
 
 function shuffle(arr) {
     var j, x, i;
@@ -93,6 +97,7 @@ var handler = function(){
 
 //probably have to rewrite this code to be more dynamic; ie not to hardocode the zeroth element
 divChilds.map(function(value,index){
+  value.style.backgroundColor = randomColor();
   value.addEventListener('click',handler)
 })
 
@@ -127,7 +132,7 @@ divChilds.map(function(value,index){
 
 //might need to tailor this.. not hardcode it to 3 element length
 var outerDivs = divChilds.filter(function(value){
-  if (Array.prototype.slice.call((value.attributes),0).length === 3){
+  if (Array.prototype.slice.call((value.attributes),0).length === 4){
     return true;
   } else {
     return false
@@ -137,6 +142,8 @@ var outerDivs = divChilds.filter(function(value){
 var divInOut = shuffle(outerDivs).slice(0,2);
 var inlet = divInOut[0];
 var outlet = divInOut[1];
+inlet.style.backgroundColor = 'default';
+outlet.style.backgroundColor = 'default';
 inlet.style.backgroundColor = 'rgb(214,0,255)';
 outlet.style.backgroundColor = 'rgb(0,255,159)';
 function settingInOut(div){
@@ -185,7 +192,8 @@ console.log(`outlet starts flowing out from ${initOutFlow} direction`);
 //plus checking method for game over or whether pipe should flow
 //....
 
-var speed = 6;
+var prevSpeed;
+var speed = 3;
 // 4 straight flows...
 function flowDownFunc(id){
   var div = document.getElementById(id);
@@ -289,6 +297,14 @@ function flowLeftUpFunc(id){
 // flowLeftFunc('rand');
 
 document.getElementById('speed').innerText = speed;
+var time = 5;
+var intervalHandle = setInterval(function(){
+  document.getElementById('time').innerText = time;
+  time--;
+  if (time < 0) {
+    clearInterval(intervalHandle);
+  }
+},1000);
 
 setTimeout(function(){
   console.log('game started!');
@@ -312,7 +328,8 @@ setTimeout(function(){
         console.log(inlet.id);
         var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
       } else {
-        console.log(`game over!`);
+        console.log(`init stage: game over due to mismatched tiles`);
+        displayCondition('lose');
       }
       break;
     case (initInFlow === 'bottom'):
@@ -333,7 +350,8 @@ setTimeout(function(){
         console.log(inlet.id);
         var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
       } else {
-        console.log(`game over!`);
+        console.log(`init stage: game over due to mismatched tiles`);
+        displayCondition('lose');
       }
       break;
     case (initInFlow === 'left'):
@@ -355,7 +373,8 @@ setTimeout(function(){
         console.log(inlet.id);
         var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
       } else {
-        console.log(`game over!`);
+        console.log(`init stage: game over due to mismatched tiles`);
+        displayCondition('lose');
       }
       break;
     case (initInFlow === 'right'):
@@ -376,13 +395,14 @@ setTimeout(function(){
         console.log(inlet.id);
         var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
       } else {
-        console.log(`game over!`);
+        console.log(`init stage: game over due to mismatched tiles`);
+        displayCondition('lose');
       }
       break;
   }
   inlet.removeEventListener('click', handler);
   divChecker(nextDivId, prevDivId);
-} , 5000);
+} , 6000);
 
 function checkValidMove(prevDiv,curDiv){
   if (prevDiv.classList.contains('up-down') && !curDiv.classList.contains('right-left')) {
@@ -394,110 +414,186 @@ function checkValidMove(prevDiv,curDiv){
   }
 }
 
+function checkOutFlow(div){
+  switch(initOutFlow){
+    case 'top':
+      if (div.classList.contains('up-down') || div.classList.contains('left-up') || div.classList.contains('right-up')) { return true }
+    case 'bottom':
+      if (div.classList.contains('up-down') || div.classList.contains('left-down') || div.classList.contains('right-down')) { return true }
+    case 'left':
+      if (div.classList.contains('right-left') || div.classList.contains('left-up') || div.classList.contains('left-down')) { return true }
+    case 'right':
+      if (div.classList.contains('right-left') || div.classList.contains('right-up') || div.classList.contains('right-down')) { return true }
+  }
+}
+
 function divChecker(id,prevId){
   var prevDiv = document.getElementById(prevId);
   prevDiv.addEventListener('animationend', function(){
     var curDiv = document.getElementById(id);
-    if (checkValidMove(prevDiv,curDiv)){
-      if (curDiv === null){
-        console.log('gameover within divchecker!');
-      } else {
-        switch(true){
-          case (curDiv.classList.contains('up-down')) :
-            console.log(id);
-            if (prevId[0] > id[0]) {
-              flowUpFunc(id);
-              var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
-              break;
-            };
-            if (prevId[0] < id[0]) {
-              flowDownFunc(id);
-              var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
-              break;
-            };
-            console.log(`gameover due to unmatched tiles`);
-            break;
-          case (curDiv.classList.contains('right-left')) :
-            console.log(id);
-            if (prevId[2] > id[2]) {
-              flowLeftFunc(id);
-              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
-              break;
-            };
-            if (prevId[2] < id[2]) {
-              flowRightFunc(id);
-              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
-              break;
-            };
-            console.log(`gameover due to unmatched tiles`);
-            break;
-          case (curDiv.classList.contains('left-down')) :
-            console.log(id);
-            if (prevId[0] === id[0] && prevId[2] < id[2]) {
-              flowRightDownFunc(id);
-              var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
-              break;
-            };
-            if (prevId[0] > id[0]) {
-              flowUpLeftFunc(id);
-              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
-              break;
-            };
-            console.log(`gameover due to unmatched tiles`);
-            break;
-          case (curDiv.classList.contains('left-up')) :
-            console.log(id);
-            if (prevId[0] === id[0] && prevId[2] < id[2]) {
-              flowRightUpFunc(id);
-              var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
-              break;
-            };
-            if (prevId[0] < id[0]) {
-              flowDownLeftFunc(id);
-              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
-              break;
-            };
-            console.log(`gameover due to unmatched tiles`);
-            break;
-          case (curDiv.classList.contains('right-down')) :
-            console.log(id);
-            if (prevId[0] === id[0] && prevId[2] > id[2]) {
-              flowLeftDownFunc(id);
-              var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
-              break;
-            };
-            if (prevId[0] > id[0]) {
-              flowUpRightFunc(id);
-              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
-              break;
-            };
-            console.log(`gameover due to unmatched tiles`);
-            break;
-          case (curDiv.classList.contains('right-up')) :
-            console.log(id);
-            if (prevId[0] === id[0] && prevId[2] > id[2]) {
-              flowLeftUpFunc(id);
-              var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
-              break;
-            };
-            if (prevId[0] < id[0]) {
-              flowDownRightFunc(id);
-              var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
-              break;
-            };
-            console.log(`gameover due to unmatched tiles`);
-            break;
+    if (curDiv === outlet){console.log('final stage before win!');}
+    if (curDiv === null){
+      if (prevDiv === outlet) {
+        //trigger win!
+        if (checkOutFlow(prevDiv)) {
+          console.log(`congratulations you've won!!!!`);
+          displayCondition('win');
+          playerScore += 2;
+          localStorage.playerScore = playerScore;
+          return;
+        } else {
+          console.log(`gameover due to unmatched tiles`);
+          displayCondition('lose');
+          return;
         }
-        curDiv.removeEventListener('click',handler);
-        divChecker(nextDivId,id);
       }
+      console.log(`gameover due to out of bounds!`);
+      displayCondition('lose');
+      return;
+    };
+    if (checkValidMove(prevDiv,curDiv)){
+      switch(true){
+        case (curDiv.classList.contains('up-down')) :
+          console.log(id);
+          if (prevId[0] > id[0]) {
+            flowUpFunc(id);
+            var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
+            break;
+          };
+          if (prevId[0] < id[0]) {
+            flowDownFunc(id);
+            var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
+            break;
+          };
+          console.log(`gameover due to unmatched tiles`);
+          displayCondition('lose');
+          break;
+        case (curDiv.classList.contains('right-left')) :
+          console.log(id);
+          if (prevId[2] > id[2]) {
+            flowLeftFunc(id);
+            var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
+            break;
+          };
+          if (prevId[2] < id[2]) {
+            flowRightFunc(id);
+            var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
+            break;
+          };
+          console.log(`gameover due to unmatched tiles`);
+          displayCondition('lose');
+          break;
+        case (curDiv.classList.contains('left-down')) :
+          console.log(id);
+          if (prevId[0] === id[0] && prevId[2] < id[2]) {
+            flowRightDownFunc(id);
+            var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
+            break;
+          };
+          if (prevId[0] > id[0]) {
+            flowUpLeftFunc(id);
+            var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
+            break;
+          };
+          console.log(`gameover due to unmatched tiles`);
+          displayCondition('lose');
+          break;
+        case (curDiv.classList.contains('left-up')) :
+          console.log(id);
+          if (prevId[0] === id[0] && prevId[2] < id[2]) {
+            flowRightUpFunc(id);
+            var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
+            break;
+          };
+          if (prevId[0] < id[0]) {
+            flowDownLeftFunc(id);
+            var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) - 1);
+            break;
+          };
+          console.log(`gameover due to unmatched tiles`);
+          displayCondition('lose');
+          break;
+        case (curDiv.classList.contains('right-down')) :
+          console.log(id);
+          if (prevId[0] === id[0] && prevId[2] > id[2]) {
+            flowLeftDownFunc(id);
+            var nextDivId = (Number(curDiv.id.split('')[0]) + 1) + '-' + curDiv.id.split('')[2];
+            break;
+          };
+          if (prevId[0] > id[0]) {
+            flowUpRightFunc(id);
+            var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
+            break;
+          };
+          console.log(`gameover due to unmatched tiles`);
+          displayCondition('lose');
+          break;
+        case (curDiv.classList.contains('right-up')) :
+          console.log(id);
+          if (prevId[0] === id[0] && prevId[2] > id[2]) {
+            flowLeftUpFunc(id);
+            var nextDivId = (Number(curDiv.id.split('')[0]) - 1) + '-' + curDiv.id.split('')[2];
+            break;
+          };
+          if (prevId[0] < id[0]) {
+            flowDownRightFunc(id);
+            var nextDivId = curDiv.id.split('')[0] + '-' + (Number(curDiv.id.split('')[2]) + 1);
+            break;
+          };
+          console.log(`gameover due to unmatched tiles`);
+          displayCondition('lose');
+          break;
+      }
+      curDiv.removeEventListener('click',handler);
+      curDiv.style.backgroundColor = 'rgb(214,0,255)';
+      divChecker(nextDivId,id);
     }
   })
 }
 
+window.addEventListener("keydown",function(e){
+  if (e.keyCode === 32){
+    if (speed > 1){
+      speed--;
+      document.getElementById('speed').innerText = speed;
+      }
+    } else if (e.keyCode === 13){
+      prevSpeed = speed;
+      speed = 0;
+      document.getElementById('speed').innerText = 'hyperdrive warming up....!';
+      setTimeout(function(){
+        document.getElementById('speed').innerText = 'hyper speed!';
+      }, 1000)
+      console.log('hyperdrive initiated');
+    }
+});
 
-//implement recursive stuff...
+//DONE!!!!
+//<---------------------------------------------->
 //implement outlet condition...
 //implement game over function...
 //implement speed trigger
 //implement a finish flow immmediately listener
+//<---------------------------------------------->
+
+// open the mPopup once the link is clicked
+var displayCondition = function(param) {
+  switch(param){
+    case 'win':
+      document.getElementById('headMsg').innerText = '＼(￣▽￣)／Congratulations!!!!＼(￣▽￣)／';
+      document.getElementById('message').innerText = 'you are awesome! ヽ(>∀<☆)ノ keep it up!';
+      break;
+    case 'lose':
+      document.getElementById('headMsg').innerText = '(╯︵╰,)Game Over...(╯︵╰,)';
+      document.getElementById('message').innerText = 'please try again! ╰(*´︶`*)╯';
+  }
+  document.getElementById('mpopupBox').style.display = "block";
+}
+// close the mPopup once close element is clicked
+document.getElementsByClassName("close")[0].onclick = function() {
+  document.getElementById('mpopupBox').style.display = "none";
+}
+
+document.getElementById('restart').onclick = function() {
+  location.reload();
+}

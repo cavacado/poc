@@ -2,42 +2,68 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link href='flows.css' rel='stylesheet'>
     <link href='styles.css' rel='stylesheet'>
     <title>poc</title>
   </head>
   <body>
-    <div id='wrapTheWrapper'>
-      <div><h3>current speed : <span id='speed'></span></h3></div>
-      <div id='gameWrap'>
-        <div id='1-1'><div></div></div>
-        <div id='1-2'><div></div></div>
-        <div id='1-3'><div></div></div>
-        <div id='1-4'><div></div></div>
-        <div id='1-5'><div></div></div>
-        <div id='2-1'><div></div></div>
-        <div id='2-2'><div></div></div>
-        <div id='2-3'><div></div></div>
-        <div id='2-4'><div></div></div>
-        <div id='2-5'><div></div></div>
-        <div id='3-1'><div></div></div>
-        <div id='3-2'><div></div></div>
-        <div id='3-3'><div></div></div>
-        <div id='3-4'><div></div></div>
-        <div id='3-5'><div></div></div>
-        <div id='4-1'><div></div></div>
-        <div id='4-2'><div></div></div>
-        <div id='4-3'><div></div></div>
-        <div id='4-4'><div></div></div>
-        <div id='4-5'><div></div></div>
-        <div id='5-1'><div></div></div>
-        <div id='5-2'><div></div></div>
-        <div id='5-3'><div></div></div>
-        <div id='5-4'><div></div></div>
-        <div id='5-5'><div></div></div>
+    <div id='wrapTheWrapTheWrapper'>
+      <div id='currentScore'><h4>current score: <span id='score'></span></h4></div>
+      <div id='wrapTheWrapper'>
+        <div id='gameStarter'><h2>game starting in : <span id='time'></span></h2></div>
+        <div id='speedIndicator'><h3>current speed : <span id='speed'></span></h3></div>
+        <div id='gameWrap'>
+          <div id='1-1'><div></div></div>
+          <div id='1-2'><div></div></div>
+          <div id='1-3'><div></div></div>
+          <div id='1-4'><div></div></div>
+          <div id='1-5'><div></div></div>
+          <div id='2-1'><div></div></div>
+          <div id='2-2'><div></div></div>
+          <div id='2-3'><div></div></div>
+          <div id='2-4'><div></div></div>
+          <div id='2-5'><div></div></div>
+          <div id='3-1'><div></div></div>
+          <div id='3-2'><div></div></div>
+          <div id='3-3'><div></div></div>
+          <div id='3-4'><div></div></div>
+          <div id='3-5'><div></div></div>
+          <div id='4-1'><div></div></div>
+          <div id='4-2'><div></div></div>
+          <div id='4-3'><div></div></div>
+          <div id='4-4'><div></div></div>
+          <div id='4-5'><div></div></div>
+          <div id='5-1'><div></div></div>
+          <div id='5-2'><div></div></div>
+          <div id='5-3'><div></div></div>
+          <div id='5-4'><div></div></div>
+          <div id='5-5'><div></div></div>
+        </div>
       </div>
-      <div id='rand'><div></div></div>
     </div>
+
+    <!-- trigger the mPopup -->
+    <a href="javascript:void(0);" id="mpopupLink">Open Popup</a>
+
+    <!-- mPopup box -->
+    <div id="mpopupBox" class="mpopup">
+        <!-- mPopup content -->
+        <div class="mpopup-content">
+            <div class="mpopup-head">
+                <span class="close">×</span>
+                <h2 id='headMsg'>Game Over!</h2>
+            </div>
+            <div class="mpopup-main">
+                <p id='message'>your cyborex is functioning again! gogogo!</p>
+            </div>
+            <div class="mpopup-foot">
+              <button id='restart' type="button" class="btn btn-default">Click to restart</button>
+            </div>
+        </div>
+    </div>
+    <script src='randomColor.js'></script>
     <script src='main.js'></script>
   </body>
 </html>
