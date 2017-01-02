@@ -23,15 +23,36 @@ function shuffle(arr) {
 
 //swapFunc is curried
 function swapFunc(id1,class1){
+  //adding animations using animations.css
+  document.getElementById(id1).classList.add('animated');
+  document.getElementById(id1).classList.add('pulse');
+  setTimeout( function(){
+    document.getElementById(id1).classList.remove('pulse');
+  }, 700);
   return function (id2,class2){
     console.log(class1,class2);
     if (class1 !== class2){
+      //adding animations using animations.css
+      document.getElementById(id2).classList.add('animated');
+      document.getElementById(id2).classList.add('pulse');
+      setTimeout( function(){
+        document.getElementById(id2).classList.remove('pulse');
+      }, 700);
       document.getElementById(id1).classList.add(class2);
       document.getElementById(id1).classList.remove(class1);
       document.getElementById(id2).classList.add(class1);
       document.getElementById(id2).classList.remove(class2);
       console.log('operation success');
     } else {
+      document.getElementById(id1).classList.toggle('shake');
+      setTimeout( function(){
+        document.getElementById(id1).classList.remove('shake');
+      }, 700);
+      document.getElementById(id2).classList.add('animated');
+      document.getElementById(id2).classList.toggle('shake');
+      setTimeout( function(){
+        document.getElementById(id2).classList.remove('shake');
+      }, 700);
       console.log('clicked on a div with the exact same class, no change occured');
     }
   }
@@ -97,7 +118,8 @@ var handler = function(){
 
 //probably have to rewrite this code to be more dynamic; ie not to hardocode the zeroth element
 divChilds.map(function(value,index){
-  value.style.backgroundColor = randomColor();
+  value.classList.add('fade');
+  value.style.backgroundColor = randomColor({luminosity: 'light',count: 25})[index];
   value.addEventListener('click',handler)
 })
 
@@ -138,10 +160,13 @@ var outerDivs = divChilds.filter(function(value){
     return false
   }
 })
+// console.log(outerDivs);
 
 var divInOut = shuffle(outerDivs).slice(0,2);
 var inlet = divInOut[0];
 var outlet = divInOut[1];
+inlet.classList.remove('fade');
+outlet.classList.remove('fade');
 inlet.style.backgroundColor = 'default';
 outlet.style.backgroundColor = 'default';
 inlet.style.backgroundColor = 'rgb(214,0,255)';
@@ -401,6 +426,7 @@ setTimeout(function(){
       break;
   }
   inlet.removeEventListener('click', handler);
+  inlet.classList.remove('fade');
   divChecker(nextDivId, prevDivId);
 } , 6000);
 
@@ -417,13 +443,13 @@ function checkValidMove(prevDiv,curDiv){
 function checkOutFlow(div){
   switch(initOutFlow){
     case 'top':
-      if (div.classList.contains('up-down') || div.classList.contains('left-up') || div.classList.contains('right-up')) { return true }
+      return (div.classList.contains('up-down') || div.classList.contains('left-up') || div.classList.contains('right-up')) ? true : false;
     case 'bottom':
-      if (div.classList.contains('up-down') || div.classList.contains('left-down') || div.classList.contains('right-down')) { return true }
+      return (div.classList.contains('up-down') || div.classList.contains('left-down') || div.classList.contains('right-down')) ? true : false;
     case 'left':
-      if (div.classList.contains('right-left') || div.classList.contains('left-up') || div.classList.contains('left-down')) { return true }
+      return (div.classList.contains('right-left') || div.classList.contains('left-up') || div.classList.contains('left-down')) ? true : false;
     case 'right':
-      if (div.classList.contains('right-left') || div.classList.contains('right-up') || div.classList.contains('right-down')) { return true }
+      return (div.classList.contains('right-left') || div.classList.contains('right-up') || div.classList.contains('right-down')) ? true : false;
   }
 }
 
@@ -545,6 +571,7 @@ function divChecker(id,prevId){
           break;
       }
       curDiv.removeEventListener('click',handler);
+      curDiv.classList.remove('fade');
       curDiv.style.backgroundColor = 'rgb(214,0,255)';
       divChecker(nextDivId,id);
     }
@@ -561,9 +588,12 @@ window.addEventListener("keydown",function(e){
       prevSpeed = speed;
       speed = 0;
       document.getElementById('speed').innerText = 'hyperdrive warming up....!';
+      document.getElementById('hyperdriveSound').play();
       setTimeout(function(){
         document.getElementById('speed').innerText = 'hyper speed!';
-      }, 1000)
+        document.getElementById('backgroundChanger').style.backgroundColor = 'transparent';
+        document.getElementById('backgroundChanger').style.backgroundImage = `url('public/images/lightspeed2.jpg')`;
+      }, 2000)
       console.log('hyperdrive initiated');
     }
 });
