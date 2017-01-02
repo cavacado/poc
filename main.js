@@ -24,6 +24,7 @@ function shuffle(arr) {
 //swapFunc is curried
 function swapFunc(id1,class1){
   //adding animations using animations.css
+  document.getElementById('clickSound').play();
   document.getElementById(id1).classList.add('animated');
   document.getElementById(id1).classList.add('pulse');
   setTimeout( function(){
@@ -33,6 +34,7 @@ function swapFunc(id1,class1){
     console.log(class1,class2);
     if (class1 !== class2){
       //adding animations using animations.css
+      document.getElementById('clickSound').play();
       document.getElementById(id2).classList.add('animated');
       document.getElementById(id2).classList.add('pulse');
       setTimeout( function(){
@@ -44,6 +46,7 @@ function swapFunc(id1,class1){
       document.getElementById(id2).classList.remove(class2);
       console.log('operation success');
     } else {
+      document.getElementById('beepSound').play();
       document.getElementById(id1).classList.toggle('shake');
       setTimeout( function(){
         document.getElementById(id1).classList.remove('shake');
@@ -333,6 +336,8 @@ var intervalHandle = setInterval(function(){
 
 setTimeout(function(){
   console.log('game started!');
+  document.getElementById('radarSound').loop = true;
+  document.getElementById('radarSound').play()
   var prevDivId = inlet.id;
   switch(true){
     case (initInFlow === 'top'):
@@ -463,6 +468,7 @@ function divChecker(id,prevId){
         //trigger win!
         if (checkOutFlow(prevDiv)) {
           console.log(`congratulations you've won!!!!`);
+          document.getElementById('radarSound').muted = true;
           displayCondition('win');
           playerScore += 2;
           localStorage.playerScore = playerScore;
@@ -470,11 +476,13 @@ function divChecker(id,prevId){
         } else {
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
           return;
         }
       }
       console.log(`gameover due to out of bounds!`);
       displayCondition('lose');
+      document.getElementById('radarSound').muted = true;
       return;
     };
     if (checkValidMove(prevDiv,curDiv)){
@@ -493,6 +501,7 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('right-left')) :
           console.log(id);
@@ -508,6 +517,7 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('left-down')) :
           console.log(id);
@@ -523,6 +533,7 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('left-up')) :
           console.log(id);
@@ -538,6 +549,7 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('right-down')) :
           console.log(id);
@@ -553,6 +565,7 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('right-up')) :
           console.log(id);
@@ -568,6 +581,7 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
           break;
       }
       curDiv.removeEventListener('click',handler);
@@ -610,10 +624,12 @@ window.addEventListener("keydown",function(e){
 var displayCondition = function(param) {
   switch(param){
     case 'win':
+      document.getElementById('yaySound').play();
       document.getElementById('headMsg').innerText = '＼(￣▽￣)／Congratulations!!!!＼(￣▽￣)／';
       document.getElementById('message').innerText = 'you are awesome! ヽ(>∀<☆)ノ keep it up!';
       break;
     case 'lose':
+      document.getElementById('wawawaaSound').play();
       document.getElementById('headMsg').innerText = '(╯︵╰,)Game Over...(╯︵╰,)';
       document.getElementById('message').innerText = 'please try again! ╰(*´︶`*)╯';
   }
