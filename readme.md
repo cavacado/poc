@@ -2,9 +2,11 @@
 
 This project titled : poc (for now) is my first WDI project.
 It is a game inspired largely from bioshock hacking mini-game;
-most people really hated the game because you were forced to context switch between action twitch versus slow methodical thinking. A perfect case study for thinking fast and thinking slow.
+most people really hated the game because you were forced to context switch between action twitch versus slow methodical thinking.
+A perfect case study for thinking fast and thinking slow.
 
-But anyway; as mentioned, this game reverse engineers the hacking mini game from bioshock; a much dumb downed version anyway.
+But anyway; as mentioned, this game reverse engineers the hacking mini game from bioshock;
+a much dumb downed version anyway.
 
 Game mechanics will be described in the following sections.
 
@@ -13,7 +15,8 @@ To do so would require extensive backend knowledge which I currently do not have
 
 ## Getting Started
 
-To get started; just clone the repo into your local computer; open index.html in google chrome** (not optimised for all browsers yet) and play the game!
+To get started just clone the repo into your local computer;
+open index.html in google chrome** (not optimised for all browsers yet) and play the game!
 
 ### Prerequisites
 
@@ -39,9 +42,9 @@ there is an in-built scoring system that rewards players for constructing more e
 so in essence the player is rewarded for constructing longer pipes but that entails more risk.
 the short pipes are easier to construct but reward the player with lesser points.
 
-in addition; one could control the speed of the flows; increasing the speed of the flow by tapping *spacebar*. There are three options for speed; 3 (default) 2 and 1; and the lower the number the faster the speed.
+in addition; one could control the speed of the flows; increasing the speed of the flow by tapping **spacebar**. There are three options for speed; 3 (default) 2 and 1; and the lower the number the faster the speed.
 
-Lastly, there is a hyperdrive mode in which the player can immediately complete the pipeflow by pressing *enter*. for eg: if the player already finishes his/her pipeflow; he does not need to wait for the gunk to flow slowly; he/she can press *enter* to immediately complete the pipeline. However; this requires a delay of until the animation of the current square is done. (coded that way, could be improved upon..)
+Lastly, there is a hyperdrive mode in which the player can immediately complete the pipeflow by pressing **enter**. for eg: if the player already finishes his/her pipeflow; he does not need to wait for the gunk to flow slowly; he/she can press **enter** to immediately complete the pipeline. However; this requires a delay of until the animation of the current square is done. (coded that way, could be improved upon..)
 
 So far why build upon speed? this is in order to future proof this project. As mentioned; further extensions will introduce a race condition will other players. This will provide an extra strategic element for this game.
 
@@ -90,4 +93,4 @@ Git and Github were my main version control system.
 
 * Special mention to karenliu1 for her git repo https://github.com/karenliu1/pipe-dream; for the various assets and the 'mental push' to convince myself that the project was do-able.
 
-* Thanks to my friends (Wan yin and Hari) who helped me beta test the gameplay and suggested improvements to the game play. 
+* Thanks to my friends (Wan yin and Hari) who helped me beta test the gameplay and suggested improvements to the game play.
