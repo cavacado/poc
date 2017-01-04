@@ -86,7 +86,8 @@ In the future will do so. (probably something other than git-hub pages...)
 
 * Bootstrap 3.3.7
 * Animate.css 3.5.2
-* randomColor library from davidmerfield https://github.com/davidmerfield/randomColor
+* randomColor library by davidmerfield https://github.com/davidmerfield/randomColor
+* Vanilla-Notify library by MLaritz https://github.com/MLaritz/Vanilla-Notify
 
 ## Workflow
 
