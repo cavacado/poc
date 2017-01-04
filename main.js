@@ -10,11 +10,13 @@ var divChilds = Array.prototype.slice.call(document.getElementById('gameWrap').c
 //added complexity
 // var classArrWO4 = ['left-down', 'right-down', 'up-down', 'right-left', 'left-up', 'right-up', 'up-right-down-left'];
 var classArr = ['left-down', 'right-down', 'up-down', 'right-left', 'left-up', 'right-up'];
+//grabbing playerScore from localStorage
 var playerScore;
 playerScore = Number(localStorage.playerScore) || 0;
 console.log(playerScore);
 document.getElementById('score').innerText = playerScore;
 
+//shuffle utility function
 function shuffle(arr) {
     var j, x, i;
     for (i = arr.length; i; i--) {
@@ -27,6 +29,9 @@ function shuffle(arr) {
 }
 
 //swapFunc is curried
+//returns a function that expects the second div;
+//if function is complete; execute!
+//else it knows that its the first function executing..
 function swapFunc(id1,class1){
   //adding animations using animations.css
   document.getElementById('clickSound').play();
@@ -42,6 +47,8 @@ function swapFunc(id1,class1){
       document.getElementById('clickSound').play();
       document.getElementById(id2).classList.add('animated');
       document.getElementById(id2).classList.add('pulse');
+      //these set timeout statements are to remove the animation class after they've been clicked
+      //this is so that the animation class can be reapplied when clicked again later
       setTimeout( function(){
         document.getElementById(id2).classList.remove('pulse');
       }, 700);
@@ -126,13 +133,15 @@ var handler = function(){
 
 //probably have to rewrite this code to be more dynamic; ie not to hardocode the zeroth element
 //re written to be more dynamic already!
+//randomColor is taken from randomColor.js not my js!
 divChilds.map(function(value,index){
   value.classList.add('fade');
   value.style.backgroundColor = randomColor({luminosity: 'light',count: 25})[index];
   value.addEventListener('click',handler)
 })
 
-//might not need to put an attribute; can use class instead
+// might not need to put an attribute; can use class instead
+// adding attributes surprisingly worked really well; does not pollute the class space.
 divChilds.map(function(value,index){
     value.classList.add(classArr[Math.floor(Math.random()*classArr.length)])
     if (value.id ==='1-1'){
@@ -163,7 +172,8 @@ divChilds.map(function(value,index){
 
 //might need to tailor this.. not hardcode it to 3 element length
 //yes this is the most dangerous part of my code
-// watch out here!!!
+// WATCH OUT HERE!!!!!!
+//MOST DANGEROUS OF ALL!!!
 var outerDivs = divChilds.filter(function(value){
   if (Array.prototype.slice.call((value.attributes),0).length === 4){
     return true;
@@ -210,6 +220,7 @@ settingInOut(inlet);
 settingInOut(outlet);
 
 var initInFlow, initOutFlow;
+//setting the inlet and outlet dashed lines..
 var borderStyles = ['border-top-style','border-bottom-style','border-right-style','border-left-style'];
 borderStyles.map(function(value){
     if (getComputedStyle(inlet).getPropertyValue(value) === 'dashed'){

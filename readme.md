@@ -13,6 +13,8 @@ Game mechanics will be described in the following sections.
 Future extensions will incorporate card-jockey races from Nintendo (race like conditions to the end to improve game playability and extend multiplayer)
 To do so would require extensive backend knowledge which I currently do not have.
 
+Future extension I think will force me to write a reset function to be triggered that modifies all generated elements... but hopefully server side programming will help me circumvent the problem...(one can always hope..)
+
 ## Getting Started
 
 To get started just clone the repo into your local computer;
@@ -84,6 +86,7 @@ In the future will do so. (probably something other than git-hub pages...)
 
 * Bootstrap 3.3.7
 * Animate.css 3.5.2
+* randomColor library from davidmerfield https://github.com/davidmerfield/randomColor
 
 ## Workflow
 
