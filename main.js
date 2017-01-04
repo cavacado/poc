@@ -1,3 +1,8 @@
+//controlling sound elements;
+document.getElementById('clickSound').volume = 0.6;
+document.getElementById('beepSound').volume = 0.1;
+document.getElementById('radarSound').volume = 0.1;
+document.getElementById('yaySound').volume = 0.5;
 console.log(document.getElementById('gameWrap').offsetHeight);
 console.log(document.getElementById('gameWrap').offsetWidth);
 //all my divs in an array
@@ -120,6 +125,7 @@ var handler = function(){
 }
 
 //probably have to rewrite this code to be more dynamic; ie not to hardocode the zeroth element
+//re written to be more dynamic already!
 divChilds.map(function(value,index){
   value.classList.add('fade');
   value.style.backgroundColor = randomColor({luminosity: 'light',count: 25})[index];
@@ -156,6 +162,8 @@ divChilds.map(function(value,index){
   })
 
 //might need to tailor this.. not hardcode it to 3 element length
+//yes this is the most dangerous part of my code
+// watch out here!!!
 var outerDivs = divChilds.filter(function(value){
   if (Array.prototype.slice.call((value.attributes),0).length === 4){
     return true;
@@ -324,116 +332,134 @@ function flowLeftUpFunc(id){
 // flowRightFunc('rand');
 // flowLeftFunc('rand');
 
-document.getElementById('speed').innerText = speed;
-var time = 5;
-var intervalHandle = setInterval(function(){
-  document.getElementById('time').innerText = time;
-  time--;
-  if (time < 0) {
-    clearInterval(intervalHandle);
-  }
-},1000);
 
-setTimeout(function(){
-  console.log('game started!');
-  document.getElementById('radarSound').loop = true;
-  document.getElementById('radarSound').play()
-  var prevDivId = inlet.id;
-  switch(true){
-    case (initInFlow === 'top'):
-      //if div has class up-down, trigger flow down function;
-      //else if div has class right-up, trigger flow down-right function;
-      //else if div has class left-up, trigger flow down-left function;
-      //else trigger game over!;
-      if (inlet.classList.contains('up-down')){
-        flowDownFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
-      } else if (inlet.classList.contains('right-up')){
-        flowDownRightFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
-      } else if (inlet.classList.contains('left-up')){
-        flowDownLeftFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
-      } else {
-        console.log(`init stage: game over due to mismatched tiles`);
-        displayCondition('lose');
-      }
-      break;
-    case (initInFlow === 'bottom'):
-      //if div has class up-down, trigger flow up function;
-      //else if div has class right-down, trigger flow up-right function;
-      //else if div has class left-down, trigger flow up-left function;
-      //else trigger game over!;
-      if (inlet.classList.contains('up-down')){
-        flowUpFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
-      } else if (inlet.classList.contains('right-down')){
-        flowUpRightFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
-      } else if (inlet.classList.contains('left-down')){
-        flowUpLeftFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
-      } else {
-        console.log(`init stage: game over due to mismatched tiles`);
-        displayCondition('lose');
-      }
-      break;
-    case (initInFlow === 'left'):
-      //if div has class right-left, trigger flow right function;
-      //else if div has class left-down, trigger flow right-down function;
-      //else if div has class left-up, trigger flow right-up function;
-      //else trigger game over!;
-      if (inlet.classList.contains('right-left')){
-        flowRightFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
-      } else if (inlet.classList.contains('left-down')){
-        flowRightDownFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
-        console.log(nextDivId);
-      } else if (inlet.classList.contains('left-up')){
-        flowRightUpFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
-      } else {
-        console.log(`init stage: game over due to mismatched tiles`);
-        displayCondition('lose');
-      }
-      break;
-    case (initInFlow === 'right'):
-      //if div has class right-left, trigger flow left function;
-      //else if div has class right-down, trigger flow left-down function;
-      //else if div has class right-up, trigger flow left-up function;
-      //else trigger game over!;
-      if (inlet.classList.contains('right-left')){
-        flowLeftFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
-      } else if (inlet.classList.contains('right-down')){
-        flowLeftDownFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
-      } else if (inlet.classList.contains('right-up')){
-        flowLeftUpFunc(inlet.id);
-        console.log(inlet.id);
-        var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
-      } else {
-        console.log(`init stage: game over due to mismatched tiles`);
-        displayCondition('lose');
-      }
-      break;
-  }
-  inlet.removeEventListener('click', handler);
-  inlet.classList.remove('fade');
-  divChecker(nextDivId, prevDivId);
-} , 6000);
+
+function startGame(){
+  //setting time and speed settings
+  document.getElementById('speed').innerText = speed;
+  var time = 5;
+  var intervalHandle = setInterval(function(){
+    document.getElementById('time').innerText = time;
+    time--;
+    if (time < 0) {
+      clearInterval(intervalHandle);
+    }
+  },1000);
+
+  setTimeout(function(){
+    console.log('game started!');
+    document.getElementById('radarSound').loop = true;
+    document.getElementById('radarSound').play()
+    var prevDivId = inlet.id;
+    switch(true){
+      case (initInFlow === 'top'):
+        //if div has class up-down, trigger flow down function;
+        //else if div has class right-up, trigger flow down-right function;
+        //else if div has class left-up, trigger flow down-left function;
+        //else trigger game over!;
+        if (inlet.classList.contains('up-down')){
+          flowDownFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
+        } else if (inlet.classList.contains('right-up')){
+          flowDownRightFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
+        } else if (inlet.classList.contains('left-up')){
+          flowDownLeftFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
+        } else {
+          console.log(`init stage: game over due to mismatched tiles`);
+          displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
+        }
+        break;
+      case (initInFlow === 'bottom'):
+        //if div has class up-down, trigger flow up function;
+        //else if div has class right-down, trigger flow up-right function;
+        //else if div has class left-down, trigger flow up-left function;
+        //else trigger game over!;
+        if (inlet.classList.contains('up-down')){
+          flowUpFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
+        } else if (inlet.classList.contains('right-down')){
+          flowUpRightFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
+        } else if (inlet.classList.contains('left-down')){
+          flowUpLeftFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
+        } else {
+          console.log(`init stage: game over due to mismatched tiles`);
+          displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
+        }
+        break;
+      case (initInFlow === 'left'):
+        //if div has class right-left, trigger flow right function;
+        //else if div has class left-down, trigger flow right-down function;
+        //else if div has class left-up, trigger flow right-up function;
+        //else trigger game over!;
+        if (inlet.classList.contains('right-left')){
+          flowRightFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) + 1);
+        } else if (inlet.classList.contains('left-down')){
+          flowRightDownFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
+          console.log(nextDivId);
+        } else if (inlet.classList.contains('left-up')){
+          flowRightUpFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
+        } else {
+          console.log(`init stage: game over due to mismatched tiles`);
+          displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
+        }
+        break;
+      case (initInFlow === 'right'):
+        //if div has class right-left, trigger flow left function;
+        //else if div has class right-down, trigger flow left-down function;
+        //else if div has class right-up, trigger flow left-up function;
+        //else trigger game over!;
+        if (inlet.classList.contains('right-left')){
+          flowLeftFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = inlet.id.split('')[0] + '-' + (Number(inlet.id.split('')[2]) - 1);
+        } else if (inlet.classList.contains('right-down')){
+          flowLeftDownFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = (Number(inlet.id.split('')[0]) + 1) + '-' + inlet.id.split('')[2];
+        } else if (inlet.classList.contains('right-up')){
+          flowLeftUpFunc(inlet.id);
+          console.log(inlet.id);
+          var nextDivId = (Number(inlet.id.split('')[0]) - 1) + '-' + inlet.id.split('')[2];
+        } else {
+          console.log(`init stage: game over due to mismatched tiles`);
+          displayCondition('lose');
+          document.getElementById('radarSound').muted = true;
+        }
+        break;
+    }
+    inlet.removeEventListener('click', handler);
+    inlet.classList.remove('fade');
+    divChecker(nextDivId, prevDivId);
+  } , 6000);
+}
+
+if (!playerScore) {
+  document.getElementById('instructionsBox').style.display = "block";
+  //call start game function only after clicking start game button;
+} else {
+  //try to wrap this funcitonality here;
+  startGame();
+  document.getElementById('startGame').disabled = true;
+}
 
 function checkValidMove(prevDiv,curDiv){
   if (prevDiv.classList.contains('up-down') && !curDiv.classList.contains('right-left')) {
@@ -457,8 +483,10 @@ function checkOutFlow(div){
       return (div.classList.contains('right-left') || div.classList.contains('right-up') || div.classList.contains('right-down')) ? true : false;
   }
 }
-
+var counter = 0;
 function divChecker(id,prevId){
+  counter++;
+  console.log(counter);
   var prevDiv = document.getElementById(prevId);
   prevDiv.addEventListener('animationend', function(){
     var curDiv = document.getElementById(id);
@@ -470,8 +498,17 @@ function divChecker(id,prevId){
           console.log(`congratulations you've won!!!!`);
           document.getElementById('radarSound').muted = true;
           displayCondition('win');
-          playerScore += 2;
-          localStorage.playerScore = playerScore;
+          //minus the inlet and outlet score
+          if (counter < 6){
+            playerScore += (counter - 2);
+            localStorage.playerScore = playerScore;
+          } else if (counter < 9 && counter > 6) {
+            playerScore += (counter - 2) * 2;
+            localStorage.playerScore = playerScore;
+          } else {
+            playerScore += (counter - 2) * 4;
+            localStorage.playerScore = playerScore;
+          }
           return;
         } else {
           console.log(`gameover due to unmatched tiles`);
@@ -636,10 +673,21 @@ var displayCondition = function(param) {
   document.getElementById('mpopupBox').style.display = "block";
 }
 // close the mPopup once close element is clicked
-document.getElementsByClassName("close")[0].onclick = function() {
+document.getElementById('endCloseButton').onclick = function() {
   document.getElementById('mpopupBox').style.display = "none";
 }
-
 document.getElementById('restart').onclick = function() {
   location.reload();
 }
+
+
+document.getElementById('ipopupLink').addEventListener('click',function(){
+  document.getElementById('instructionsBox').style.display = "block";
+})
+document.getElementById('startCloseButton').onclick = function() {
+  document.getElementById('instructionsBox').style.display = "none";
+}
+document.getElementById('startGame').addEventListener('click',function(){
+  startGame();
+  document.getElementById('instructionsBox').style.display = "none";
+})

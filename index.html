@@ -12,7 +12,11 @@
   <body>
     <div id='backgroundChanger'>
       <div id='wrapTheWrapTheWrapper'>
-        <div id='currentScore'><h4>current score: <span id='score'></span></h4></div>
+        <div id='currentScore'>
+          <h4>current score: <span id='score'></span></h4>
+          <!-- trigger the instructions mPopup -->
+          <a href="javascript:void(0);" id="ipopupLink">Click here to review instructions!!</a>
+        </div>
         <div id='wrapTheWrapper'>
           <div id='gameStarter'><h2>game starting in : <span id='time'></span></h2></div>
           <div id='speedIndicator'><h3>current speed : <span id='speed'></span></h3></div>
@@ -47,15 +51,43 @@
       </div>
     </div>
 
-    <!-- trigger the mPopup -->
+    <!-- mPopup box -->
+    <div id="instructionsBox" class="mpopup">
+        <!-- mPopup content -->
+        <div class="mpopup-content">
+            <div class="mpopup-head">
+                <span id='startCloseButton' class="close">×</span>
+                <h2 id='insturctionsMsg'>How to play the game?</h2>
+            </div>
+            <div class="mpopup-main">
+                <p id='instructionsContent'>
+                  <br />The main purpose of the game is to direct the purple gunk <br />from the magenta square inlet to the teal square outlet
+                  <br />
+                  <br />How to do so? <br />Start by just clicking one pipe and another one to swap their positions!
+                  <br /><br />
+                  There are 3 different speed options: press spacebar to increase the speed!
+                  <br>
+                  For advanced players; press enter to enter hyperdrive mode!
+                  <br /><br />
+                  Due to the energy consumption of the hyperdrive;
+                  <br />
+                  one needs to wait for it to warm up before it triggers
+                  <br />
+                </p>
+            </div>
+            <div class="mpopup-foot">
+              <button id='startGame' type="button" class="btn btn-default">Click to start the game!</button>
+            </div>
+        </div>
+    </div>
+    <!-- trigger the WIN/LOSE mPopup -->
     <a href="javascript:void(0);" id="mpopupLink">Open Popup</a>
-
     <!-- mPopup box -->
     <div id="mpopupBox" class="mpopup">
         <!-- mPopup content -->
         <div class="mpopup-content">
             <div class="mpopup-head">
-                <span class="close">×</span>
+                <span id='endCloseButton' class="close">×</span>
                 <h2 id='headMsg'>Game Over!</h2>
             </div>
             <div class="mpopup-main">
