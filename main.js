@@ -181,8 +181,11 @@ var outerDivs = divChilds.filter(function(value){
     return false
   }
 })
+//MOST DANGEROUS OF ALL!!!
 // console.log(outerDivs);
 
+//defining inlet/outlet (noticed it is dependent on the previous section of code?)
+//setting all properties of inlet/outlet ie background color remove fade class
 var divInOut = shuffle(outerDivs).slice(0,2);
 var inlet = divInOut[0];
 var outlet = divInOut[1];
@@ -362,6 +365,7 @@ function startGame(){
     document.getElementById('radarSound').loop = true;
     document.getElementById('radarSound').play()
     var prevDivId = inlet.id;
+    //this swtich chunk can be refactored down into nice concise code but meh...(too lazy to do so)
     switch(true){
       case (initInFlow === 'top'):
         //if div has class up-down, trigger flow down function;
@@ -383,7 +387,6 @@ function startGame(){
         } else {
           console.log(`init stage: game over due to mismatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
         }
         break;
       case (initInFlow === 'bottom'):
@@ -406,7 +409,6 @@ function startGame(){
         } else {
           console.log(`init stage: game over due to mismatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
         }
         break;
       case (initInFlow === 'left'):
@@ -430,7 +432,6 @@ function startGame(){
         } else {
           console.log(`init stage: game over due to mismatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
         }
         break;
       case (initInFlow === 'right'):
@@ -453,7 +454,6 @@ function startGame(){
         } else {
           console.log(`init stage: game over due to mismatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
         }
         break;
     }
@@ -467,11 +467,11 @@ if (!playerScore) {
   document.getElementById('instructionsBox').style.display = "block";
   //call start game function only after clicking start game button;
 } else {
-  //try to wrap this funcitonality here;
   startGame();
   document.getElementById('startGame').disabled = true;
 }
 
+//actualy don't really know why this function really is needed lol; when I was coding it I wasn't too sure about it at all but it works so yay! (might be bloat might need to remove next time..)
 function checkValidMove(prevDiv,curDiv){
   if (prevDiv.classList.contains('up-down') && !curDiv.classList.contains('right-left')) {
     return true;
@@ -495,9 +495,26 @@ function checkOutFlow(div){
   }
 }
 var counter = 0;
+var triggered2X = false;
+var triggered4X = false;
+var triggered8X = false;
 function divChecker(id,prevId){
+  //need to trigger a pop-up(non-intrusive) to say that the points recieved from now on will be multiplied!
+  //done!!! nice!!
   counter++;
-  console.log(counter);
+  if (counter < 10 && counter > 6 && !triggered2X){
+    vNotify.info({text: '2X multiplier achieved!', title:'<(￣︶￣)> Nice!! <(￣︶￣)>'});
+    triggered2X = true;
+  };
+  if (counter < 15 && counter > 10 && !triggered4X){
+    vNotify.success({text: '4X multiplier achieved! AWESOME!', title: '\(★ω★)/ Woohoo! \(★ω★)/'});
+    triggered4X = true;
+  };
+  if (counter > 15 && !triggered8X){
+    vNotify.error({text: '8X multiplier achieved! You are GOD!', title: 'おめでとうございます!'});
+    triggered8X = true;
+  };
+  // console.log(counter);
   var prevDiv = document.getElementById(prevId);
   prevDiv.addEventListener('animationend', function(){
     var curDiv = document.getElementById(id);
@@ -507,30 +524,31 @@ function divChecker(id,prevId){
         //trigger win!
         if (checkOutFlow(prevDiv)) {
           console.log(`congratulations you've won!!!!`);
-          document.getElementById('radarSound').muted = true;
           displayCondition('win');
           //minus the inlet and outlet score
+          //scoring multiplier added!
           if (counter < 6){
             playerScore += (counter - 2);
             localStorage.playerScore = playerScore;
-          } else if (counter < 9 && counter > 6) {
+          } else if (counter < 10 && counter > 6) {
             playerScore += (counter - 2) * 2;
             localStorage.playerScore = playerScore;
-          } else {
+          } else if (counter < 15 && counter > 10){
             playerScore += (counter - 2) * 4;
+            localStorage.playerScore = playerScore;
+          } else {
+            playerScore += (counter - 2) * 8;
             localStorage.playerScore = playerScore;
           }
           return;
         } else {
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
           return;
         }
       }
       console.log(`gameover due to out of bounds!`);
       displayCondition('lose');
-      document.getElementById('radarSound').muted = true;
       return;
     };
     if (checkValidMove(prevDiv,curDiv)){
@@ -549,7 +567,6 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('right-left')) :
           console.log(id);
@@ -565,7 +582,6 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('left-down')) :
           console.log(id);
@@ -581,7 +597,6 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('left-up')) :
           console.log(id);
@@ -597,7 +612,6 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('right-down')) :
           console.log(id);
@@ -613,7 +627,6 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
           break;
         case (curDiv.classList.contains('right-up')) :
           console.log(id);
@@ -629,7 +642,6 @@ function divChecker(id,prevId){
           };
           console.log(`gameover due to unmatched tiles`);
           displayCondition('lose');
-          document.getElementById('radarSound').muted = true;
           break;
       }
       curDiv.removeEventListener('click',handler);
@@ -641,6 +653,7 @@ function divChecker(id,prevId){
 }
 
 window.addEventListener("keydown",function(e){
+  //adding listeners to the spacebar and enter keys
   if (e.keyCode === 32){
     if (speed > 1){
       speed--;
@@ -675,11 +688,14 @@ var displayCondition = function(param) {
       document.getElementById('yaySound').play();
       document.getElementById('headMsg').innerText = '＼(￣▽￣)／Congratulations!!!!＼(￣▽￣)／';
       document.getElementById('message').innerText = 'you are awesome! ヽ(>∀<☆)ノ keep it up!';
+      document.getElementById('radarSound').muted = true;
       break;
     case 'lose':
       document.getElementById('wawawaaSound').play();
       document.getElementById('headMsg').innerText = '(╯︵╰,)Game Over...(╯︵╰,)';
       document.getElementById('message').innerText = 'please try again! ╰(*´︶`*)╯';
+      document.getElementById('radarSound').muted = true;
+      break;
   }
   document.getElementById('mpopupBox').style.display = "block";
 }
