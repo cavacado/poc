@@ -528,7 +528,7 @@ function divChecker(id,prevId){
           displayCondition('win');
           //minus the inlet and outlet score
           //scoring multiplier added!
-          if (counter < 7){
+          if (counter < 6){
             console.log('did not trigger any multiplier');
             playerScore += (counter - 2);
             localStorage.playerScore = playerScore;
