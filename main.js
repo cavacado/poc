@@ -494,6 +494,7 @@ function checkOutFlow(div){
       return (div.classList.contains('right-left') || div.classList.contains('right-up') || div.classList.contains('right-down')) ? true : false;
   }
 }
+
 var counter = 0;
 var triggered2X = false;
 var triggered4X = false;

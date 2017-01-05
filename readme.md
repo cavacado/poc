@@ -78,9 +78,9 @@ No tests have been written for this project. Rather, most tests were written dyn
 
 ## Live Version
 
-Currently there isn't any live version of the game being hosted on any website.
+Currently the live version of the game being hosted @ this url:
 
-In the future will do so. (probably something other than git-hub pages...)
+https://cavacado.github.io/poc/
 
 ## Built With
 
