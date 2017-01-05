@@ -507,11 +507,11 @@ function divChecker(id,prevId){
     vNotify.info({text: '2X multiplier achieved!', title:'<(￣︶￣)> Nice!! <(￣︶￣)>'});
     triggered2X = true;
   };
-  if (counter < 15 && counter > 10 && !triggered4X){
+  if (counter < 17 && counter > 10 && !triggered4X){
     vNotify.success({text: '4X multiplier achieved! AWESOME!', title: '\(★ω★)/ Woohoo! \(★ω★)/'});
     triggered4X = true;
   };
-  if (counter > 15 && !triggered8X){
+  if (counter > 17 && !triggered8X){
     vNotify.error({text: '8X multiplier achieved! You are GOD!', title: 'おめでとうございます!'});
     triggered8X = true;
   };
@@ -528,16 +528,20 @@ function divChecker(id,prevId){
           displayCondition('win');
           //minus the inlet and outlet score
           //scoring multiplier added!
-          if (counter < 6){
+          if (counter < 7){
+            console.log('did not trigger any multiplier');
             playerScore += (counter - 2);
             localStorage.playerScore = playerScore;
           } else if (counter < 10 && counter > 6) {
+            console.log('triggered 2X multiplier!');
             playerScore += (counter - 2) * 2;
             localStorage.playerScore = playerScore;
-          } else if (counter < 15 && counter > 10){
+          } else if (counter < 17 && counter > 10){
+            console.log('triggered 4X multiplier!');
             playerScore += (counter - 2) * 4;
             localStorage.playerScore = playerScore;
           } else {
+            console.log('triggered 8X multiplier!');
             playerScore += (counter - 2) * 8;
             localStorage.playerScore = playerScore;
           }
