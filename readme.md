@@ -15,7 +15,7 @@ To do so would require extensive backend knowledge which I currently do not have
 
 Future extension I think will force me to write a reset function to be triggered that modifies all generated elements... but hopefully server side programming will help me circumvent the problem...(one can always hope..)
 
-![alt text](/Users/zhaoloong/Desktop/ga/js/first-project/poc/public/images/poc-demo.gif)
+![alt text](public/images/poc-demo.gif)
 
 
 ## Getting Started
