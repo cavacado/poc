@@ -83,7 +83,7 @@ No tests have been written for this project. Rather, most tests were written dyn
 
 Currently the live version of the game being hosted @ this url:
 
-https://cavacado.github.io/poc/
+https://pipe-organising-concert.herokuapp.com/
 
 ## Built With
 
